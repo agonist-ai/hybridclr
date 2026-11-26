@@ -1,3 +1,5 @@
+> **Fork notice — agonist-ai, branch `6000.6.x`.** This repository is a fork of [focus-creative-games/hybridclr](https://github.com/focus-creative-games/hybridclr) by Code Philosophy (walon and the HybridCLR contributors), MIT licence (see `LICENSE`); all upstream authorship and history are kept. Branch `6000.6.x` ports HybridCLR v8.15 (`v6000.5.x-8.15.0`) to Unity 6000.6 (libil2cpp 6000.6.0b3) for Agonist Development AB and adds a load gate (only bytes whose SHA-256 was registered by a verified delivery are loaded; a one-way "built-in code only" switch). HybridCLR interprets bytecode only: no JIT, no executable memory, no dylib. Port notes: commits on top of v6000.5.x-8.15.0 (Il2CppGenericClass::class_inst, GetTypeLoadException(msg, typeName), 6000.6 per-image metadata fields, hybridclr/LoadGate.*).
+
 - [README 中文](./README.md)
 - [README English](./README_EN.md)
 
