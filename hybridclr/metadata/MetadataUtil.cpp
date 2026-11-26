@@ -209,7 +209,7 @@ namespace metadata
 		if (IsGenericIns(containerType) /* && IsGenericIns(selfType)*/)
 		{
 			// TOTO memory leak
-			return il2cpp::metadata::GenericMetadata::InflateIfNeeded(selfType, &containerType->data.generic_class->context, true);
+			return il2cpp::metadata::GenericMetadata::InflateIfNeeded(selfType, containerType->data.generic_class->class_inst, true);
 		}
 		else
 		{
@@ -248,8 +248,8 @@ namespace metadata
 		}
 		case IL2CPP_TYPE_GENERICINST:
 		{
-			const Il2CppGenericInst* i1 = t1->data.generic_class->context.class_inst;
-			const Il2CppGenericInst* i2 = t2->data.generic_class->context.class_inst;
+			const Il2CppGenericInst* i1 = t1->data.generic_class->class_inst;
+			const Il2CppGenericInst* i2 = t2->data.generic_class->class_inst;
 
 			// this happens when maximum generic recursion is hit
 			if (i1 == NULL || i2 == NULL)
@@ -389,8 +389,8 @@ namespace metadata
 		}
 		case IL2CPP_TYPE_GENERICINST:
 		{
-			const Il2CppGenericInst* i1 = dstType->data.generic_class->context.class_inst;
-			const Il2CppGenericInst* i2 = sigType->data.generic_class->context.class_inst;
+			const Il2CppGenericInst* i1 = dstType->data.generic_class->class_inst;
+			const Il2CppGenericInst* i2 = sigType->data.generic_class->class_inst;
 
 			// this happens when maximum generic recursion is hit
 			if (i1 == NULL || i2 == NULL)
@@ -482,8 +482,8 @@ namespace metadata
 		}
 		case IL2CPP_TYPE_GENERICINST:
 		{
-			const Il2CppGenericInst* i1 = dstType->data.generic_class->context.class_inst;
-			const Il2CppGenericInst* i2 = sigType->data.generic_class->context.class_inst;
+			const Il2CppGenericInst* i1 = dstType->data.generic_class->class_inst;
+			const Il2CppGenericInst* i2 = sigType->data.generic_class->class_inst;
 
 			// this happens when maximum generic recursion is hit
 			if (i1 == NULL || i2 == NULL)
@@ -789,7 +789,7 @@ namespace metadata
 		case IL2CPP_TYPE_GENERICINST:
 		{
 			Il2CppGenericClass* genericClass = type->data.generic_class;
-			return HasNotInstantiatedGenericType(genericClass->context.class_inst);
+			return HasNotInstantiatedGenericType(genericClass->class_inst);
 		}
 		case IL2CPP_TYPE_VAR:
         case IL2CPP_TYPE_MVAR:

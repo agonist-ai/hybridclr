@@ -132,6 +132,15 @@ namespace metadata
 		metadataImage->entryPointIndex = EncodeWithIndexExcept0(_rawImage->GetEntryPointToken());
 		metadataImage->exportedTypeStart = EncodeWithIndex(0);
 		metadataImage->image = image2;
+#if HYBRIDCLR_UNITY_VERSION >= 60000600
+		// 6000.6 keeps invoker indices, RGCTX ranges and eager cctors per image in global metadata.
+		// An interpreter image has none of them; the runtime routes its lookups to MetadataModule.
+		metadataImage->invokerIndicesStart = 0;
+		metadataImage->rgctxRangesStart = 0;
+		metadataImage->rgctxRangesCount = 0;
+		metadataImage->staticConstructorStart = 0;
+		metadataImage->staticConstructorCount = 0;
+#endif
 		image2->metadataHandle = reinterpret_cast<Il2CppMetadataImageHandle>(metadataImage);
 #endif
 
@@ -885,7 +894,7 @@ namespace metadata
 		{
 			std::string stdTypeName = il2cpp::utils::StringUtils::Utf16ToUtf8(fullName->chars);
 			TEMP_FORMAT(errMsg, "CustomAttribute fixed arg type:System.Type fullName:'%s' not find", stdTypeName.c_str());
-			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetTypeLoadException(errMsg));
+			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetTypeLoadException(errMsg, nullptr));
 		}
 		WriteTypeIndex(writer, type->type);
 	}
@@ -2405,7 +2414,7 @@ namespace metadata
 		{
 			std::string stdTypeName = il2cpp::utils::StringUtils::Utf16ToUtf8(fullName->chars);
 			TEMP_FORMAT(errMsg, "CustomAttribute fixed arg type:System.Type fullName:'%s' not find", stdTypeName.c_str());
-			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetTypeLoadException(errMsg));
+			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetTypeLoadException(errMsg, nullptr));
 		}
 		return type;
 	}

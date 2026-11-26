@@ -1,5 +1,7 @@
 #pragma once
 
+#include "il2cpp-config.h" // brings hybridclr/generated/UnityVersion.h before the version test below
+
 #if HYBRIDCLR_UNITY_2023_OR_NEW
 #include "codegen/il2cpp-codegen.h"
 #else

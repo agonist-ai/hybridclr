@@ -92,7 +92,7 @@ namespace hybridclr
 	{
 		if (!type)
 		{
-			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetTypeLoadException("type not exists"));
+			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetTypeLoadException("type not exists", nullptr));
 		}
 
 		std::string fullName = GetKlassCStringFullName(type);
@@ -152,7 +152,7 @@ namespace hybridclr
 	{
 		if (!type)
 		{
-			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetTypeLoadException("type not exists"));
+			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetTypeLoadException("type not exists", nullptr));
 		}
 		std::string stdFullName = GetKlassCStringFullName(type);
 		TEMP_FORMAT(errMsg, "field %s::%s not exists", stdFullName.c_str(), fieldName);

@@ -344,7 +344,9 @@ namespace metadata
             return;
         }
 
-        const Il2CppGenericContext* gc = type->type == IL2CPP_TYPE_GENERICINST ? &type->data.generic_class->context : nullptr;
+        // 6000.6: Il2CppGenericClass keeps only class_inst (no embedded Il2CppGenericContext)
+        Il2CppGenericContext classContext = { type->type == IL2CPP_TYPE_GENERICINST ? type->data.generic_class->class_inst : nullptr, nullptr };
+        const Il2CppGenericContext* gc = type->type == IL2CPP_TYPE_GENERICINST ? &classContext : nullptr;
         for (uint16_t i = 0; i < typeDef.field_count; i++)
         {
             FieldIndex fieldIndex = typeDef.fieldStart + i;

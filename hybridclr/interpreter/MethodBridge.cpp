@@ -112,7 +112,7 @@ namespace interpreter
 		const Il2CppClass* underlyingGenericClass = il2cpp::vm::Class::FromIl2CppType(underlyingGenericType);
 		BuildValueTypeFullName(underlyingGenericClass, sigBuf, bufferSize, pos);
 		AppendString(sigBuf, bufferSize, pos, "<");
-		const Il2CppGenericInst* classInst = type->data.generic_class->context.class_inst;
+		const Il2CppGenericInst* classInst = type->data.generic_class->class_inst;
 		for (uint32_t i = 0 ; i < classInst->type_argc; ++i)
 		{
 			if (i != 0)

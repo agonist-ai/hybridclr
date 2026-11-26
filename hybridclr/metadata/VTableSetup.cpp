@@ -254,7 +254,7 @@ namespace metadata
 	{
 		if (!type)
 		{
-			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetTypeLoadException("type not exists"));
+			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetTypeLoadException("type not exists", nullptr));
 		}
 
 		const Il2CppTypeDefinition typeDefinition = GetUnderlyingTypeDefinition(type);
@@ -642,7 +642,7 @@ namespace metadata
 				const Il2CppGenericClass* genericClass = type->data.generic_class;
 				for (const MethodImpl& mi : explicitImpls)
 				{
-					const Il2CppType* containerType = il2cpp::metadata::GenericMetadata::InflateIfNeeded(mi.declaration.containerType, &genericClass->context, true);
+					const Il2CppType* containerType = il2cpp::metadata::GenericMetadata::InflateIfNeeded(mi.declaration.containerType, genericClass->class_inst, true);
 					const Il2CppType* implType = TryInflateIfNeed(type, type->data.generic_class->type, mi.body.containerType);
 					ApplyExplicitOverride(implInterfaceOffsetIdxs, explicitImplToken2Slots, containerType,
 						mi.declaration.methodHandle, implType, mi.body.methodHandle);

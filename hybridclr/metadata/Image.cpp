@@ -986,7 +986,7 @@ namespace metadata
         if (!klass)
         {
             TEMP_FORMAT(errMsg, "InterpreterImage::GetClassFromToken token:%u class not exists", token);
-            il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetTypeLoadException(errMsg));
+            il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetTypeLoadException(errMsg, nullptr));
         }
         tokenCache.insert({ key, (void*)klass });
         return klass;
@@ -1228,7 +1228,7 @@ namespace metadata
         // final genericContext = finalContainerType.class_inst + mri.instantiation
         if (instantiation)
         {
-            const Il2CppGenericInst* finalClassIns = finalContainerType->type == IL2CPP_TYPE_GENERICINST ? finalContainerType->data.generic_class->context.class_inst : nullptr;
+            const Il2CppGenericInst* finalClassIns = finalContainerType->type == IL2CPP_TYPE_GENERICINST ? finalContainerType->data.generic_class->class_inst : nullptr;
             const Il2CppGenericInst* finalMethodIns = instantiation;
             Il2CppGenericContext finalGenericContext = { finalClassIns, finalMethodIns };
             method = method->is_inflated ? method->genericMethod->methodDefinition : method;
