@@ -19,6 +19,7 @@
 #include "MetadataUtil.h"
 #include "ConsistentAOTHomologousImage.h"
 #include "SuperSetAOTHomologousImage.h"
+#include "../LoadGate.h"
 
 namespace hybridclr
 {
@@ -99,6 +100,8 @@ namespace metadata
 
     Il2CppAssembly* Assembly::LoadFromBytes(const void* assemblyData, uint64_t length, const void* rawSymbolStoreBytes, uint64_t rawSymbolStoreLength)
     {
+        // the one door for code bytes (LoadGate.h): refused unless the delivery module registered their SHA-256
+        LoadGate::CheckOrRaise(assemblyData, (size_t)length, "Assembly.Load");
         Il2CppAssembly* ass = Create((const byte*)assemblyData, length, (const byte*)rawSymbolStoreBytes, rawSymbolStoreLength);
         RunModuleInitializer(ass->image);
         return ass;
@@ -179,6 +182,8 @@ namespace metadata
 
     LoadImageErrorCode Assembly::LoadMetadataForAOTAssembly(const void* dllBytes, uint32_t dllSize, HomologousImageMode mode)
     {
+        // supplementary metadata carries IL bodies the interpreter runs: same door as Assembly.Load
+        LoadGate::CheckOrRaise(dllBytes, (size_t)dllSize, "LoadMetadataForAOTAssembly");
         il2cpp::os::FastAutoLock lock(&il2cpp::vm::g_MetadataLock);
 
         AOTHomologousImage* image = nullptr;

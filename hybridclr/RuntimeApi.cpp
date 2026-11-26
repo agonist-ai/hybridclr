@@ -10,6 +10,7 @@
 #include "metadata/MetadataUtil.h"
 #include "interpreter/InterpreterModule.h"
 #include "RuntimeConfig.h"
+#include "LoadGate.h"
 
 namespace hybridclr
 {
@@ -20,6 +21,10 @@ namespace hybridclr
 		il2cpp::vm::InternalCalls::Add("HybridCLR.RuntimeApi::SetRuntimeOption(HybridCLR.RuntimeOptionId,System.Int32)", (Il2CppMethodPointer)SetRuntimeOption);
 		il2cpp::vm::InternalCalls::Add("HybridCLR.RuntimeApi::PreJitClass(System.Type)", (Il2CppMethodPointer)PreJitClass);
 		il2cpp::vm::InternalCalls::Add("HybridCLR.RuntimeApi::PreJitMethod(System.Reflection.MethodInfo)", (Il2CppMethodPointer)PreJitMethod);
+		il2cpp::vm::InternalCalls::Add("HybridCLR.RuntimeApi::GetLoadGateNative()", (Il2CppMethodPointer)GetLoadGate);
+		il2cpp::vm::InternalCalls::Add("HybridCLR.RuntimeApi::SetLoadGateNative(System.Int32)", (Il2CppMethodPointer)SetLoadGate);
+		il2cpp::vm::InternalCalls::Add("HybridCLR.RuntimeApi::AllowLoad(System.Byte[])", (Il2CppMethodPointer)AllowLoad);
+		il2cpp::vm::InternalCalls::Add("HybridCLR.RuntimeApi::GetLoadGateCount(System.Boolean)", (Il2CppMethodPointer)GetLoadGateCount);
 	}
 
 	int32_t RuntimeApi::LoadMetadataForAOTAssembly(Il2CppArray* dllBytes, int32_t mode)
@@ -29,6 +34,30 @@ namespace hybridclr
 			il2cpp::vm::Exception::RaiseNullReferenceException();
 		}
 		return (int32_t)hybridclr::metadata::Assembly::LoadMetadataForAOTAssembly(il2cpp::vm::Array::GetFirstElementAddress(dllBytes), il2cpp::vm::Array::GetByteLength(dllBytes), (hybridclr::metadata::HomologousImageMode)mode);
+	}
+
+	int32_t RuntimeApi::GetLoadGate()
+	{
+		return (int32_t)LoadGate::GetMode();
+	}
+
+	int32_t RuntimeApi::SetLoadGate(int32_t mode)
+	{
+		return (int32_t)LoadGate::SetMode((LoadGateMode)mode);
+	}
+
+	bool RuntimeApi::AllowLoad(Il2CppArray* sha256)
+	{
+		if (!sha256)
+		{
+			il2cpp::vm::Exception::RaiseNullReferenceException();
+		}
+		return LoadGate::AllowLoad((const uint8_t*)il2cpp::vm::Array::GetFirstElementAddress(sha256), il2cpp::vm::Array::GetByteLength(sha256));
+	}
+
+	int32_t RuntimeApi::GetLoadGateCount(bool refused)
+	{
+		return refused ? LoadGate::Refused() : LoadGate::Accepted();
 	}
 
 	int32_t RuntimeApi::GetRuntimeOption(int32_t optionId)
